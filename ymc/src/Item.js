@@ -111,9 +111,13 @@ class Item extends Component {
     }
     
     render() {
+        var sum = 0;
+        for(var i = 0; i < this.state.index.length; i++) {
+            sum += this.state.sizes[i];
+        }
         return (
             <div>
-                <h1>{this.state.item}</h1>
+                <h1>{this.state.item}:{sum}</h1>
                 {this.state.index.map( i => {
                     return (
                     <div key={i}>
