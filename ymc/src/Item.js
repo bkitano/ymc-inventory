@@ -24,11 +24,55 @@ class Item extends Component {
         });
     }
     
-    updateInventory(e) {
+    sellItem(e) {
         
         e.preventDefault();
         var id = e.target.id;
         var newSize = this.state.sizes;
+        
+        newSize[id] -= 1;
+        
+        // change the state (might not be necessary once we implement persistence)
+        // this.setState({size:newSize});
+        
+        // persist to firebase
+        var refName = 'item/' + this.state.item;
+        var dbref = fire.database().ref(refName);
+        
+        dbref.on('value', snapshot => {
+            var data = snapshot.val();
+            console.log(data);
+        })
+        
+        
+        if(this.state.item === "tee") {
+            dbref.set({
+                0: newSize[0],
+                1: newSize[1],
+                2: newSize[2],
+                3: newSize[3],
+                4: newSize[4],
+                5: newSize[5]
+
+            });
+        } else if(this.state.item === "sweater") {
+            dbref.set({
+                0: newSize[0],
+                1: newSize[1],
+                2: newSize[2],
+                3: newSize[3],
+                4: newSize[4],
+                5: newSize[5]
+            });
+        }
+    }
+    
+    returnItem(e) {
+        
+        e.preventDefault();
+        var id = e.target.id;
+        var newSize = this.state.sizes;
+        
         newSize[id] += 1;
         
         // change the state (might not be necessary once we implement persistence)
@@ -64,9 +108,6 @@ class Item extends Component {
                 5: newSize[5]
             });
         }
-        
-        
-        
     }
     
     render() {
@@ -76,8 +117,12 @@ class Item extends Component {
                 {this.state.index.map( i => {
                     return (
                     <div key={i}>
-                        <RaisedButton id={i} className="btn btn-primary" onClick={this.updateInventory.bind(this)}>
-                            <h3 id={i}> {this.state.labels[i]}: {this.state.sizes[i]} </h3>
+                        <h3 id={i}> {this.state.labels[i]}: {this.state.sizes[i]} </h3>
+                        <RaisedButton id={i} op="sell" className="sell btn btn-primary" onClick={this.sellItem.bind(this)}>
+                            <p id={i}> sell </p>
+                        </RaisedButton>
+                        <RaisedButton id={i} op="return" className="return btn btn-primary" onClick={this.returnItem.bind(this)}>
+                            <p id={i}> return </p>
                         </RaisedButton>
                     </div>
                     );
