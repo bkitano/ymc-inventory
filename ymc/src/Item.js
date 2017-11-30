@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import fire from './fire.js';
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 
 class Item extends Component {
@@ -24,26 +25,19 @@ class Item extends Component {
         });
     }
     
-    sellItem(e) {
+    sellItem(i) {
         
-        e.preventDefault();
-        var id = e.target.id;
+        var id = i; 
         var newSize = this.state.sizes;
         
         newSize[id] -= 1;
         
         // change the state (might not be necessary once we implement persistence)
-        // this.setState({size:newSize});
+        this.setState({size:newSize});
         
         // persist to firebase
         var refName = 'item/' + this.state.item;
         var dbref = fire.database().ref(refName);
-        
-        dbref.on('value', snapshot => {
-            var data = snapshot.val();
-            console.log(data);
-        })
-        
         
         if(this.state.item === "tee") {
             dbref.set({
@@ -67,10 +61,10 @@ class Item extends Component {
         }
     }
     
-    returnItem(e) {
+    // Problem: never gets the id value.
+    returnItem(i) {
         
-        e.preventDefault();
-        var id = e.target.id;
+        var id = i;
         var newSize = this.state.sizes;
         
         newSize[id] += 1;
@@ -81,12 +75,6 @@ class Item extends Component {
         // persist to firebase
         var refName = 'item/' + this.state.item;
         var dbref = fire.database().ref(refName);
-        
-        dbref.on('value', snapshot => {
-            var data = snapshot.val();
-            console.log(data);
-        })
-        
         
         if(this.state.item === "tee") {
             dbref.set({
@@ -115,23 +103,23 @@ class Item extends Component {
         for(var i = 0; i < this.state.index.length; i++) {
             sum += this.state.sizes[i];
         }
+        
         return (
-            <div>
-                <h1>{this.state.item}:{sum}</h1>
+            <Card>
+                <CardTitle title={this.state.item} subtitle={sum} />
                 {this.state.index.map( i => {
+                    var thing = this.state.labels[i] + ": " + this.state.sizes[i];
                     return (
-                    <div key={i}>
-                        <h3 id={i}> {this.state.labels[i]}: {this.state.sizes[i]} </h3>
-                        <RaisedButton id={i} op="sell" className="sell btn btn-primary" onClick={this.sellItem.bind(this)}>
-                            <p id={i}> sell </p>
-                        </RaisedButton>
-                        <RaisedButton id={i} op="return" className="return btn btn-primary" onClick={this.returnItem.bind(this)}>
-                            <p id={i}> return </p>
-                        </RaisedButton>
-                    </div>
+                    <Card key={i}>
+                        <CardHeader title={thing} />
+                        <CardActions>
+                            <FlatButton onClick={ (e) => {this.sellItem(i)} } label="Sell"/>
+                            <FlatButton onClick={ (e) => {this.returnItem(i)} } label="Return"/>
+                        </CardActions>
+                    </Card>
                     );
                 })}
-            </div>
+            </Card>
             )
     }
 }
