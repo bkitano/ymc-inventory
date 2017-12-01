@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import './index.css'
 
 import Item from './Item.js';
 
@@ -9,7 +8,7 @@ class App extends Component {
     
     // css
     var style = {
-      "margin": "20px auto",
+      "margin": "10px auto",
       "width": "auto"
     };
     

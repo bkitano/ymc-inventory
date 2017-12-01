@@ -15,7 +15,9 @@ class Item extends Component {
             index: [0,1,2,3,4,5],
             sizes: [-1,-1,-1,-1,-1],
             labels: ['xs','s','m','l','xl','xxl'],
-            quantity: 1
+            quantity: 1,
+            color: '',
+            price: -1
         };
     }
     
@@ -24,7 +26,11 @@ class Item extends Component {
         var dbref = fire.database().ref(refName);
         dbref.on('value', snapshot => {
             var data = snapshot.val();
-            this.setState({sizes: data});
+            var color = data.color;
+            var price = data.price;
+            this.setState({sizes: data, color: color, price: price});
+            console.log(this.state.sizes);
+            console.log(this.state.color);
         });
     }
     
@@ -118,14 +124,14 @@ class Item extends Component {
         
         // styling overrides for Mui
         var style = {
-            'margin': '20px',
-            'padding': '20px'
+            'margin': '10px', // adds space on the outside
+            'padding': '10px' // adds space on the inside
         };
         
         return (
                 <Card style={style}>
-                    <CardTitle title={this.state.year + ": " + this.state.item} subtitle={sum} />
-                    <TextField hintText="quantity" onChange={ (e) => {this.qOnChange(e)} }/>
+                    <CardTitle title={this.state.year + ": " + this.state.item + " (" + sum + ")"} subtitle={ this.state.color + ", $" + this.state.price } />
+                    <TextField hintText="quantity" onChange={ (e) => {this.qOnChange(e)} } />
                     {this.state.index.map( i => {
                         var thing = this.state.labels[i] + ": " + this.state.sizes[i] ;
                         return (
