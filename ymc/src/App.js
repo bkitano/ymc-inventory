@@ -8,8 +8,8 @@ class App extends Component {
     return (
         <MuiThemeProvider>
           <div className="App">
-            <Item item='tee'/>
-            <Item item='sweater'/>
+            <Item item='tee' />
+            <Item item='sweater' />
           </div>
         </MuiThemeProvider>
 
