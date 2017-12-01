@@ -5,12 +5,15 @@ import Item from './Item.js';
 
 class App extends Component {
   render() {
-    
     // css
     var style = {
       "margin": "10px auto",
       "display": "grid",
-      "grid-template-columns": " 1fr 1fr "
+      "width": "auto",
+      "grid-template-columns": " 1fr 1fr 1fr",
+      '@media only screen and (max-width: 768px)': {
+        'width': '100%'
+      }
     };
     
     return (

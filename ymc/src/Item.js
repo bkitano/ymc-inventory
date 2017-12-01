@@ -29,8 +29,6 @@ class Item extends Component {
             var color = data.color;
             var price = data.price;
             this.setState({sizes: data, color: color, price: price});
-            console.log(this.state.sizes);
-            console.log(this.state.color);
         });
     }
     
@@ -48,26 +46,30 @@ class Item extends Component {
         var refName = this.state.year + '/' + this.state.item;
         var dbref = fire.database().ref(refName);
         
-        if(this.state.item === "tee") {
+       // if(this.state.item === "tee") {
             dbref.set({
                 0: newSize[0],
                 1: newSize[1],
                 2: newSize[2],
                 3: newSize[3],
                 4: newSize[4],
-                5: newSize[5]
+                5: newSize[5],
+                color: this.state.color,
+                price: this.state.price
 
             });
-        } else if(this.state.item === "sweater") {
-            dbref.set({
-                0: newSize[0],
-                1: newSize[1],
-                2: newSize[2],
-                3: newSize[3],
-                4: newSize[4],
-                5: newSize[5]
-            });
-        }
+        // } else if(this.state.item === "sweater") {
+            // dbref.set({
+                // 0: newSize[0],
+                // 1: newSize[1],
+            //     2: newSize[2],
+            //     3: newSize[3],
+            //     4: newSize[4],
+            //     5: newSize[5],
+            //     color: this.state.color,
+            //     price: this.state.price
+            // });
+        // }
     }
     
     // Problem: never gets the id value.
@@ -85,26 +87,28 @@ class Item extends Component {
         var refName = this.state.year + '/' + this.state.item;
         var dbref = fire.database().ref(refName);
         
-        if(this.state.item === "tee") {
+        // if(this.state.item === "tee") {
             dbref.set({
                 0: newSize[0],
                 1: newSize[1],
                 2: newSize[2],
                 3: newSize[3],
                 4: newSize[4],
-                5: newSize[5]
+                5: newSize[5],
+                color: this.state.color,
+                price: this.state.price
 
             });
-        } else if(this.state.item === "sweater") {
-            dbref.set({
-                0: newSize[0],
-                1: newSize[1],
-                2: newSize[2],
-                3: newSize[3],
-                4: newSize[4],
-                5: newSize[5]
-            });
-        }
+        // } else if(this.state.item === "sweater") {
+            // dbref.set({
+            //     0: newSize[0],
+            //     1: newSize[1],
+            //     2: newSize[2],
+            //     3: newSize[3],
+            //     4: newSize[4],
+            //     5: newSize[5]
+            // });
+        // }
     }
     
     qOnChange(e) {
