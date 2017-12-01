@@ -115,6 +115,8 @@ class Item extends Component {
         let input = parseInt(e.target.value);
         if( input ) {
             this.setState({quantity: input});
+        } else if(isNaN(input)) {
+            this.setState({quantity: 1});
         }
     }
     
@@ -133,8 +135,10 @@ class Item extends Component {
         };
         
         return (
-                <Card style={style}>
-                    <CardTitle title={this.state.year + " " + this.state.item + " (" + sum + ")"} subtitle={ this.state.color + ", $" + this.state.price } />
+                <Card style={style} >
+                    <CardTitle title={this.state.year + " " + this.state.item + " (" + sum + ")"} subtitle={ this.state.color + ", $" + this.state.price }       actAsExpander={true}
+      showExpandableButton={true} />
+                    <CardText expandable={true}>
                     <TextField hintText="quantity" onChange={ (e) => {this.qOnChange(e)} } />
                     {this.state.index.map( i => {
                         var thing = this.state.labels[i] + ": " + this.state.sizes[i] ;
@@ -148,6 +152,7 @@ class Item extends Component {
                         </Card>
                         );
                     })}
+                    </CardText>
                 </Card>
             )
     }
