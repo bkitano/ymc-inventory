@@ -130,7 +130,7 @@ class Item extends Component {
         
         return (
                 <Card style={style}>
-                    <CardTitle title={this.state.year + ": " + this.state.item + " (" + sum + ")"} subtitle={ this.state.color + ", $" + this.state.price } />
+                    <CardTitle title={this.state.year + " " + this.state.item + " (" + sum + ")"} subtitle={ this.state.color + ", $" + this.state.price } />
                     <TextField hintText="quantity" onChange={ (e) => {this.qOnChange(e)} } />
                     {this.state.index.map( i => {
                         var thing = this.state.labels[i] + ": " + this.state.sizes[i] ;

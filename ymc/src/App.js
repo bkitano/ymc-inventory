@@ -9,7 +9,8 @@ class App extends Component {
     // css
     var style = {
       "margin": "10px auto",
-      "width": "auto"
+      "display": "grid",
+      "grid-template-columns": " 1fr 1fr "
     };
     
     return (
