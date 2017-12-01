@@ -4,11 +4,13 @@ import FlatButton from 'material-ui/FlatButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 
+import './index.css'
 
 class Item extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            year: this.props.year,
             item: this.props.item,
             index: [0,1,2,3,4,5],
             sizes: [-1,-1,-1,-1,-1],
@@ -18,7 +20,7 @@ class Item extends Component {
     }
     
     componentDidMount() {
-        var refName = 'item/' + this.state.item;
+        var refName = this.props.year + '/' + this.state.item;
         var dbref = fire.database().ref(refName);
         dbref.on('value', snapshot => {
             var data = snapshot.val();
@@ -37,7 +39,7 @@ class Item extends Component {
         this.setState({size:newSize});
         
         // persist to firebase
-        var refName = 'item/' + this.state.item;
+        var refName = this.state.year + '/' + this.state.item;
         var dbref = fire.database().ref(refName);
         
         if(this.state.item === "tee") {
@@ -74,7 +76,7 @@ class Item extends Component {
         // this.setState({size:newSize});
         
         // persist to firebase
-        var refName = 'item/' + this.state.item;
+        var refName = this.state.year + '/' + this.state.item;
         var dbref = fire.database().ref(refName);
         
         if(this.state.item === "tee") {
@@ -103,33 +105,40 @@ class Item extends Component {
         let input = parseInt(e.target.value);
         if( input ) {
             this.setState({quantity: input});
-            console.log(this.state.quantity);
         }
     }
     
     render() {
         var sum = 0;
+        
+        // get the totals for each item
         for(var i = 0; i < this.state.index.length; i++) {
             sum += this.state.sizes[i];
         }
         
+        // styling overrides for Mui
+        var style = {
+            'margin': '20px',
+            'padding': '20px'
+        };
+        
         return (
-            <Card>
-                <CardTitle title={this.state.item} subtitle={sum} />
-                <TextField hintText="quantity" onChange={ (e) => {this.qOnChange(e)} }/>
-                {this.state.index.map( i => {
-                    var thing = this.state.labels[i] + ": " + this.state.sizes[i];
-                    return (
-                    <Card key={i}>
-                        <CardHeader title={thing} />
-                        <CardActions>
-                            <FlatButton onClick={ (e) => {this.sellItem(i)} } label="Sell"/>
-                            <FlatButton onClick={ (e) => {this.returnItem(i)} } label="Return"/>
-                        </CardActions>
-                    </Card>
-                    );
-                })}
-            </Card>
+                <Card style={style}>
+                    <CardTitle title={this.state.year + ": " + this.state.item} subtitle={sum} />
+                    <TextField hintText="quantity" onChange={ (e) => {this.qOnChange(e)} }/>
+                    {this.state.index.map( i => {
+                        var thing = this.state.labels[i] + ": " + this.state.sizes[i] ;
+                        return (
+                        <Card key={i}>
+                            <CardHeader title={thing} />
+                            <CardActions>
+                                <FlatButton onClick={ (e) => {this.sellItem(i)} } label="Sell"/>
+                                <FlatButton onClick={ (e) => {this.returnItem(i)} } label="Return"/>
+                            </CardActions>
+                        </Card>
+                        );
+                    })}
+                </Card>
             )
     }
 }
