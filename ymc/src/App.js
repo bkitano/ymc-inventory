@@ -1,18 +1,28 @@
 import React, {Component} from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import Inventory from './Inventory';
+// react-router
+import {
+  Route,
+  NavLink,
+  HashRouter
+} from "react-router-dom";
+
+// full page components
 import Header from './Header';
+import Inventory from './Inventory';
 
 class App extends Component {
     render() {
         return (
-            <MuiThemeProvider>
+            <HashRouter>
                 <div className="App" >
-                    <Header />
-                    <Inventory />
+                    <MuiThemeProvider>
+                        <Header />
+                        <Route path="/inventory" component={Inventory}/>
+                    </MuiThemeProvider>
                 </div>
-            </MuiThemeProvider>
+            </HashRouter>
         );
     }
 }

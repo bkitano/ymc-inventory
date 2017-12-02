@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import fire from './fire.js';
 import FlatButton from 'material-ui/FlatButton';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 
 import './index.css'
@@ -109,20 +109,22 @@ class Item extends Component {
         
         return (
                 <Card style={style} >
-                    <CardTitle title={this.state.year + " " + this.state.item + " (" + sum + ")"} subtitle={ this.state.color + ", $" + this.state.price }       actAsExpander={true}
+                    <CardTitle title={this.state.year + " " + this.state.item + " (" + sum + ")"} subtitle={ this.state.color + ", $" + this.state.price } actAsExpander={true}
       showExpandableButton={true} />
                     <CardMedia expandable={true}>
                     <TextField hintText="quantity" onChange={ (e) => {this.qOnChange(e)} } />
                     {this.state.index.map( i => {
                         var thing = this.state.labels[i] + ": " + this.state.sizes[i] ;
                         return (
-                        <Card key={i}>
-                            <CardHeader title={thing} />
-                            <CardActions>
-                                <FlatButton onClick={ (e) => {this.sellItem(i)} } label="Sell"/>
-                                <FlatButton onClick={ (e) => {this.returnItem(i)} } label="Return"/>
-                            </CardActions>
-                        </Card>
+                            <div key={i}>
+                                <Card >
+                                    <CardHeader title={thing} />
+                                    <CardActions>
+                                        <FlatButton onClick={ (e) => {this.sellItem(i)} } label="Sell"/>
+                                        <FlatButton onClick={ (e) => {this.returnItem(i)} } label="Return"/>
+                                    </CardActions>
+                                </Card>
+                            </div>
                         );
                     })}
                     </CardMedia>

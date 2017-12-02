@@ -3,6 +3,13 @@ import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 
+// react-router
+import {
+  Route,
+  NavLink,
+  HashRouter
+} from "react-router-dom";
+
 class Header extends Component {
     
     constructor(props) {
@@ -23,17 +30,14 @@ class Header extends Component {
     
     render() {
         
-        // styling
-        var style = {
-            "width":"100%",
-            "height":"200px"
-        }
-        
         return (
             <div>
                 <AppBar title="YMC" onLeftIconButtonTouchTap={(e) => {this.handleToggle(e)}}/>
                 <Drawer docked={false} open={this.state.drawerOpen} onRequestChange={(e) => {this.handleClose(e)}}>
-                    <MenuItem onClick={(e) => {this.handleClose(e)}}> Item </MenuItem>
+                    <AppBar title="Menu" showMenuIconButton={false}/>
+                    <MenuItem >
+                        <NavLink to='/inventory'>Inventory</NavLink>
+                    </MenuItem>
                 </Drawer>
             </div>
             );
