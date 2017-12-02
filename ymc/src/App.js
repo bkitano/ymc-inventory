@@ -11,6 +11,7 @@ import {
 // full page components
 import Header from './Header';
 import Inventory from './Inventory';
+import Home from './Home';
 
 class App extends Component {
     render() {
@@ -20,6 +21,7 @@ class App extends Component {
                     <MuiThemeProvider>
                         <Header />
                         <Route path="/inventory" component={Inventory}/>
+                        <Route exact path="/" component={Home}/>
                     </MuiThemeProvider>
                 </div>
             </HashRouter>

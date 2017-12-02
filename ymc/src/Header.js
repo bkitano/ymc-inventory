@@ -15,7 +15,8 @@ class Header extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            drawerOpen : false
+            drawerOpen : false,
+            activePage : ' - Home'
         };
     }
     
@@ -28,16 +29,30 @@ class Header extends Component {
         this.setState({drawerOpen: false});
     }
     
+    handleMenuClick(siteName) {
+        this.setState({activePage: siteName, drawerOpen: false});
+    }
+    
     render() {
         
         return (
             <div>
-                <AppBar title="YMC" onLeftIconButtonTouchTap={(e) => {this.handleToggle(e)}}/>
+                <AppBar title={"YMC" + this.state.activePage} onLeftIconButtonTouchTap={(e) => {this.handleToggle(e)}}/>
                 <Drawer docked={false} open={this.state.drawerOpen} onRequestChange={(e) => {this.handleClose(e)}}>
                     <AppBar title="Menu" showMenuIconButton={false}/>
-                    <MenuItem >
-                        <NavLink to='/inventory' style={{ textDecoration: 'none' }}>Inventory</NavLink>
-                    </MenuItem>
+                    
+                    <NavLink to='/' style={{ textDecoration: 'none' }}  >
+                        <MenuItem onClick={(e) => {this.handleMenuClick(' - Home')}}>
+                            Home
+                        </MenuItem>
+                    </NavLink>
+                    
+                    <NavLink to='/inventory' style={{ textDecoration: 'none' }} >
+                        <MenuItem onClick={(e) => {this.handleMenuClick(' - Inventory')}}>
+                            Inventory
+                        </MenuItem>
+                    </NavLink>
+                
                 </Drawer>
             </div>
             );
