@@ -58,18 +58,6 @@ class Item extends Component {
                 price: this.state.price
 
             });
-        // } else if(this.state.item === "sweater") {
-            // dbref.set({
-                // 0: newSize[0],
-                // 1: newSize[1],
-            //     2: newSize[2],
-            //     3: newSize[3],
-            //     4: newSize[4],
-            //     5: newSize[5],
-            //     color: this.state.color,
-            //     price: this.state.price
-            // });
-        // }
     }
     
     // Problem: never gets the id value.
@@ -80,14 +68,10 @@ class Item extends Component {
         
         newSize[id] += this.state.quantity;
         
-        // change the state (might not be necessary once we implement persistence)
-        // this.setState({size:newSize});
-        
         // persist to firebase
         var refName = this.state.year + '/' + this.state.item;
         var dbref = fire.database().ref(refName);
         
-        // if(this.state.item === "tee") {
             dbref.set({
                 0: newSize[0],
                 1: newSize[1],
@@ -97,18 +81,7 @@ class Item extends Component {
                 5: newSize[5],
                 color: this.state.color,
                 price: this.state.price
-
             });
-        // } else if(this.state.item === "sweater") {
-            // dbref.set({
-            //     0: newSize[0],
-            //     1: newSize[1],
-            //     2: newSize[2],
-            //     3: newSize[3],
-            //     4: newSize[4],
-            //     5: newSize[5]
-            // });
-        // }
     }
     
     qOnChange(e) {
@@ -138,7 +111,7 @@ class Item extends Component {
                 <Card style={style} >
                     <CardTitle title={this.state.year + " " + this.state.item + " (" + sum + ")"} subtitle={ this.state.color + ", $" + this.state.price }       actAsExpander={true}
       showExpandableButton={true} />
-                    <CardText expandable={true}>
+                    <CardMedia expandable={true}>
                     <TextField hintText="quantity" onChange={ (e) => {this.qOnChange(e)} } />
                     {this.state.index.map( i => {
                         var thing = this.state.labels[i] + ": " + this.state.sizes[i] ;
@@ -152,7 +125,7 @@ class Item extends Component {
                         </Card>
                         );
                     })}
-                    </CardText>
+                    </CardMedia>
                 </Card>
             )
     }
