@@ -36,7 +36,7 @@ class Header extends Component {
                 <Drawer docked={false} open={this.state.drawerOpen} onRequestChange={(e) => {this.handleClose(e)}}>
                     <AppBar title="Menu" showMenuIconButton={false}/>
                     <MenuItem >
-                        <NavLink to='/inventory'>Inventory</NavLink>
+                        <NavLink to='/inventory' style={{ textDecoration: 'none' }}>Inventory</NavLink>
                     </MenuItem>
                 </Drawer>
             </div>
